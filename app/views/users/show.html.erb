@@ -1,0 +1,7 @@
+<h1>Questions Answered by: <%="#{@user.email}" %></h1>
+
+<li><%= @user.questions.map { |q| q.question } %></li>
+
+<br>
+<%= link_to "Home", root_url %>
+

@@ -6,13 +6,12 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     @questions = Question.all
-    @users = User.select("DISTINCT name, id")
   end
 
   # GET /questions/1
   # GET /questions/1.json
   def show
-    @users = User.select("DISTINCT name, id")
+    @users = @question.users
   end
 
   # GET /questions/new
@@ -22,16 +21,20 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
+    if @question.save
+      current_user.questions << @question
+    end
   end
 
   # POST /questions
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-    #@question.user_id = current_user.id
+
 
   respond_to do |format|
       if @question.save
+        current_user.questions << @question
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
         format.json { render action: 'show', status: :created, location: @question }
       else

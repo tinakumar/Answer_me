@@ -1,7 +1,11 @@
 AnswerMe::Application.routes.draw do
+  get "users/index"
+  get "users/show"
   resources :questions
 
   resources :questions_users
+
+  resources :users
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
